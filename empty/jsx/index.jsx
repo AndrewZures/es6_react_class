@@ -1,5 +1,7 @@
 const _               = require('lodash');
 const React           = require('react');
+const OMDB            = require('omdb-client');
+
 const Preload         = require('./netflix');
 const Header          = require('./Header');
 const MovieContainer  = require('./MovieContainer');
@@ -13,7 +15,8 @@ class App extends React.Component {
 
     this.state = {
       results: _.clone(Preload.Search),
-      layout: 'tile'
+      layout: 'tile',
+      queryTerm: ''
     }
   }
 
@@ -27,6 +30,11 @@ class App extends React.Component {
     return layout === 'tile' ? MovieTileLayout : MovieListLayout
   }
 
+  search(term) {
+    this.setState({ queryTerm: term });
+    OMDB.search({ query: term }, (err, data) => { this .setState({ results: data.Search }) });
+  }
+
   render() {
     let layout = this.chooseLayout(this.state.layout);
 
@@ -35,6 +43,8 @@ class App extends React.Component {
         <Header
           layout={ this.state.layout }
           changeLayout={ this.changeLayout.bind(this) }
+          queryTerm={ this.state.queryTerm }
+          search={ this.search.bind(this) }
         />
         <div className="movies-list">
           { this.state.results.map( el => {
