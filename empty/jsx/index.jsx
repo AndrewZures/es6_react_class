@@ -1,6 +1,7 @@
 const _              = require('lodash');
 const React          = require('react');
 const preload        = require('./netflix');
+const MovieTileLayout = require('./MovieTileLayout');
 const MovieContainer = require('./MovieContainer');
 
 class App extends React.Component {
@@ -22,6 +23,7 @@ class App extends React.Component {
                 <MovieContainer
                   id={ el.imdbID }
                   key={ el.imdbID }
+                  layout={ MovieTileLayout }
                 />
               );
             })
@@ -32,4 +34,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = App
+module.exports = App;

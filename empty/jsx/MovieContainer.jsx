@@ -15,7 +15,11 @@ class MovieContainer extends React.Component {
   }
 
   render() {
-    return( <img src={this.state.movie.Poster} /> );
+    return(
+      <this.props.layout
+        {...this.state.movie }
+      />
+    );
   }
 }
 
